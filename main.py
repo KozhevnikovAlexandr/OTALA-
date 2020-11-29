@@ -1,16 +1,9 @@
 import json
 from TimedAutomaton import TimedAutomaton
-from TestData import Test_data
-from ia import Simplest_automaton
-import random
 
 convergence_number = 100
 
 ta = TimedAutomaton([0, 1])
-investigated_automaton = Simplest_automaton()
-
-
-data1 = [[investigated_automaton.make_random_transition(), investigated_automaton.current_state] for x in range(100000)]
 
 with open('input.json', 'r') as read_file:
     input = json.load(read_file)
@@ -34,7 +27,7 @@ observation_count = 0
 time_was_changed = False
 time = 0
 
-for new_observation in data1:
+for new_observation in data:
     observation_count += 1
     for state in ta.states:
         if new_observation == state:
@@ -63,18 +56,16 @@ for new_observation in data1:
 print('Изучено данных: '+ str(observation_count))
 print('Состояний: ' + str(len(ta.states)))
 print('Переходов: ' + str(len(ta.transitions)))
-print('*' * 10 + 'TEST' + '*' * 10)
+print('*' * 10 + 'ТЕСТ' + '*' * 10)
 test_input = input[500:]
 test_output = output[500:]
-count = 0
-q = 0
+success = 0
 
 for i in range(len(test_input)):
     a = ta.get_result(test_input[i])
     if a == test_output[i]:
-        count += 1
-    else:
-        q += 1
-print('верно предсказано: '+ str(count))
-print('всего проверок: ' + str(1000 - observation_count))
-print('процент успеха: ' + str(count/(1000 - observation_count)*100))
+        success += 1
+
+print('верно предсказано: ' + str(success))
+print('всего проверок: ' + str(len(input) - observation_count))
+print('процент успеха: ' + str(success/(len(input) - observation_count)*100))

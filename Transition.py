@@ -1,6 +1,6 @@
 class Transition():
 
-    def __init__(self, source, trigger, destination):
+    def __init__(self, source, time, destination):
         self.source = source
-        self.trigger = trigger
         self.destination = destination
+        self.time = time
