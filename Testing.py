@@ -1,7 +1,7 @@
 from TimedAutomaton import TimedAutomaton
 import test_data_constructor
 from Training import training
-
+from modbus_data import get_modbus_data
 
 def checking_transitions(ta, data):
     success_count = 0
@@ -22,9 +22,11 @@ def checking_transitions(ta, data):
 
 if __name__ == '__main__':
     ta = TimedAutomaton([0, 1])
-    data = [test_data_constructor.state_to_dec(x) for x in test_data_constructor.get_data()]
-    ta = training(ta, data, convergence_number=100)
-    result = checking_transitions(ta, data)
+    data = get_modbus_data('modbus_40-3_unordered.pcap', '192.168.0.40', '192.168.0.3', 62)
+    data1 = get_modbus_data('modbus_clever_office_131-218_full_bad.pcap', '192.168.12.131', '192.168.252.218', 6)
+    ta = training(ta, data[:300], convergence_number=100)
+    working_data = data[300:]
+    result = checking_transitions(ta, working_data)
     print('успехов ' + str(result[0]))
     print('аномалий ' + str(result[1]))
-    print('процент успеха ' + str(result[0] / len(data) * 100))
+    print('процент успеха ' + str(result[0] / len(working_data) * 100))
