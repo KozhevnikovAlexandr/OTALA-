@@ -1,5 +1,6 @@
 from Transition import *
 
+
 class TimedAutomaton:
     transitions = []
     states = []
@@ -28,7 +29,5 @@ class TimedAutomaton:
         return False
 
     def adapt_timing_information(self, transition, time):
-        if time < transition.time:
-            transition.time = time
-            return True
-        return False
+        if abs(transition.time - time) > 5:
+            transition.time = (transition.time - time)/2

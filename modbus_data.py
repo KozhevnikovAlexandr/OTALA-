@@ -1,6 +1,7 @@
 from scapy.all import rdpcap
 import test_data_constructor
 
+
 def get_modbus_data(path, input_ip, output_ip, displacement):
     pcap = rdpcap(path)
     input_data = dict()
